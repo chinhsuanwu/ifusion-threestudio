@@ -65,7 +65,7 @@ class Magic123(BaseLift3DSystem):
         self.log("train/loss_rgb", loss_rgb)
         loss += loss_rgb * self.C(self.cfg.loss.lambda_rgb)
 
-        loss_mask = F.binary_cross_entropy(
+        loss_mask = F.binary_cross_entropy_with_logits(
             out_input["opacity"].clamp(1.0e-5, 1.0 - 1.0e-5),
             batch["mask"].float(),
         )
@@ -163,14 +163,7 @@ class Magic123(BaseLift3DSystem):
                 ]
                 if "comp_normal" in out
                 else []
-            )
-            + [
-                {
-                    "type": "grayscale",
-                    "img": out["opacity"][0, :, :, 0],
-                    "kwargs": {"cmap": None, "data_range": (0, 1)},
-                },
-            ],
+            ),
             name="validation_step",
             step=self.true_global_step,
         )
@@ -199,14 +192,7 @@ class Magic123(BaseLift3DSystem):
                 ]
                 if "comp_normal" in out
                 else []
-            )
-            + [
-                {
-                    "type": "grayscale",
-                    "img": out["opacity"][0, :, :, 0],
-                    "kwargs": {"cmap": None, "data_range": (0, 1)},
-                },
-            ],
+            ),
             name="test_step",
             step=self.true_global_step,
         )

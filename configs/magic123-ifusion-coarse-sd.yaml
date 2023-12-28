@@ -1,15 +1,14 @@
-name: "magic123-coarse-sd"
-tag: "${rmspace:${basename:${data.image_path}},_}-${rmspace:${system.prompt_processor.prompt},_}"
+name: "magic123-coarse-sd-ifusion"
+tag: "${rmspace:${basename:${dirname:${data.transform_fp}}},_}-${rmspace:${system.prompt_processor.prompt},_}"
 exp_root_dir: "outputs"
 seed: 0
 
-data_type: "single-image-datamodule"
+data_type: "multi-image-datamodule"
 data:
-  image_path: ???
+  transform_fp: ???
   height: 128
   width: 128
   default_elevation_deg: 0.0
-  default_azimuth_deg: 0.0
   default_camera_distance: 2.5
   default_fovy_deg: 40.0
   random_camera:
@@ -76,19 +75,24 @@ system:
     num_samples_per_ray: 256
     return_comp_normal: true
 
-  guidance_3d_type: "zero123-guidance"
+  guidance_3d_type: "zero123-ifusion-guidance"
   guidance_3d:
-    pretrained_model_name_or_path: "./load/zero123/zero123-xl.ckpt"
+    pretrained_model_name_or_path: "load/zero123/zero123-xl.ckpt"
     pretrained_config: "./load/zero123/sd-objaverse-finetune-c_concat-256.yaml"
-    vram_O: false
-    cond_image_path: ${data.image_path}
-    cond_elevation_deg: ${data.default_elevation_deg}
-    cond_azimuth_deg: ${data.default_azimuth_deg}
-    cond_camera_distance: ${data.default_camera_distance}
+    vram_O: False
+    transform_fp: ${data.transform_fp}
+    default_elevation_deg: ${data.default_elevation_deg}
+    default_camera_distance: ${data.default_camera_distance}
 
     guidance_scale: 5.0
     min_step_percent: 0.2
     max_step_percent: 0.6
+
+    lora:
+      ckpt_path: ${dirname:${data.transform_fp}}/lora.ckpt
+      rank: 12
+      target_replace_module: ["CrossAttention", "GEGLU"]
+
 
   prompt_processor_type: "stable-diffusion-prompt-processor"
   prompt_processor:

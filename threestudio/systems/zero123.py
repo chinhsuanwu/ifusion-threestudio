@@ -279,25 +279,7 @@ class Zero123(BaseLift3DSystem):
                 ]
                 if "comp_normal" in out
                 else []
-            )
-            + (
-                [
-                    {
-                        "type": "grayscale",
-                        "img": out["depth"][0],
-                        "kwargs": {},
-                    }
-                ]
-                if "depth" in out
-                else []
-            )
-            + [
-                {
-                    "type": "grayscale",
-                    "img": out["opacity"][0, :, :, 0],
-                    "kwargs": {"cmap": None, "data_range": (0, 1)},
-                },
-            ],
+            ),
             # claforte: TODO: don't hardcode the frame numbers to record... read them from cfg instead.
             name=f"validation_step_batchidx_{batch_idx}"
             if batch_idx in [0, 7, 15, 23, 29]
@@ -352,25 +334,7 @@ class Zero123(BaseLift3DSystem):
                 ]
                 if "comp_normal" in out
                 else []
-            )
-            + (
-                [
-                    {
-                        "type": "grayscale",
-                        "img": out["depth"][0],
-                        "kwargs": {},
-                    }
-                ]
-                if "depth" in out
-                else []
-            )
-            + [
-                {
-                    "type": "grayscale",
-                    "img": out["opacity"][0, :, :, 0],
-                    "kwargs": {"cmap": None, "data_range": (0, 1)},
-                },
-            ],
+            ),
             name="test_step",
             step=self.true_global_step,
         )

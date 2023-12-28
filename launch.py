@@ -156,8 +156,6 @@ def main(args, extras) -> None:
             else:
                 handler.setFormatter(logging.Formatter("[%(levelname)s] %(message)s"))
 
-    load_custom_modules()
-
     # parse YAML config to OmegaConf
     cfg: ExperimentConfig
     cfg = load_config(args.config, cli_args=extras, n_gpus=n_gpus)
