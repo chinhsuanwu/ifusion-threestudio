@@ -1,6 +1,6 @@
 # iFusion Threestudio
 
-### [Project Page](https://chinhsuanwu.github.io/ifusion) | [Paper]()
+### [Project Page](https://chinhsuanwu.github.io/ifusion) | [Paper](https://arxiv.org/abs/2312.17250)
 
 This code is forked from [threestudio](https://github.com/threestudio-project/threestudio) as an extension of [iFusion](https://github.com/chinhsuanwu/ifusion) for pose-free reconstruction.
 
@@ -44,6 +44,17 @@ Run Magic123 with additional text prompt
 python launch.py --config configs/magic123-ifusion-coarse-sd.yaml --train --gpu 0 data.transform_fp=path_to_transform.json system.prompt_processor.prompt="text"
 ```
 Find out more examples at `run.sh`.
+
+## Citation
+
+```bibtex
+@article{wu2023ifusion,
+  author = {Wu, Chin-Hsuan and Chen, Yen-Chun, Solarte, Bolivar and Yuan, Lu and Sun, Min},
+  title = {iFusion: Inverting Diffusion for Pose-Free Reconstruction from Sparse Views},
+  journal = {arXiv preprint arXiv:2312.17250},
+  year = {2023}
+}
+```
 
 ## Acknowledgements
 This code is built upon [threestudio](https://github.com/threestudio-project/threestudio). We sincerely thank all the contributors for their efforts!
